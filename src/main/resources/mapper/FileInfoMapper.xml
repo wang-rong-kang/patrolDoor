@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unicom.patrolDoor.dao.FileInfoMapper">
+    <resultMap id="BaseResultMap" type="com.unicom.patrolDoor.entity.FileInfo">
+        <result column="file_id" property="fileId" jdbcType="BIGINT"/>
+        <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+        <result column="file_size" property="fileSize" jdbcType="INTEGER"/>
+        <result column="file_ext" property="fileExt" jdbcType="VARCHAR"/>
+        <result column="file_user_id" property="fileUserId" jdbcType="INTEGER"/>
+        <result column="file_path" property="filePath" jdbcType="VARCHAR"/>
+        <result column="file_state" property="fileState" jdbcType="VARCHAR"/>
+        <result column="file_create_time" property="fileCreateTime" jdbcType="VARCHAR"/>
+        <result column="file_brief" property="fileBrief" jdbcType="VARCHAR"/>
+        <result column="file_download" property="fileDownload" jdbcType="INTEGER"/>
+        <result column="file_download_num" property="fileDownloadNum" jdbcType="INTEGER"/>
+        <result column="knowledge_id" property="knowledgeId" jdbcType="INTEGER"/>
+        <result column="is_no_knowledge" property="isNoKnowledge" jdbcType="INTEGER"/>
+        <result column="knowledge_ids" property="knowledgeIds" jdbcType="VARCHAR"/>
+        <result column="file_statu" property="fileStatu" jdbcType="INTEGER"/>
+        <result column="file_key_word" property="fileKeyWord" jdbcType="VARCHAR"/>
+        <result column="file_describe" property="fileDescribe" jdbcType="VARCHAR"/>
+        <result column="un_useful_num" property="unUsefulNum" jdbcType="INTEGER"/>
+        <result column="useful_num" property="usefulNum" jdbcType="INTEGER"/>
+        <result column="pdf_url" property="pdfUrl" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        file_id
+        ,
+        file_name,
+        file_size,
+        file_ext,
+        file_user_id,
+        file_path,
+        file_state,
+        file_create_time,
+        file_brief,
+        is_no_knowledge,
+        knowledge_id,
+        knowledge_ids,
+        file_statu,
+        file_key_word,
+        file_describe,
+        useful_num,
+        un_useful_num
+    </sql>
+
+
+    <insert id="insert" parameterType="com.unicom.patrolDoor.entity.FileInfo">
+        insert into file_info (file_id, file_name, file_size,
+                               file_ext, file_user_id,
+                               file_path, file_state,
+                               file_create_time, file_brief)
+        values (#{fileId,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=INTEGER},
+                #{fileExt,jdbcType=VARCHAR}, #{fileUserId,jdbcType=INTEGER},
+                #{filePath,jdbcType=VARCHAR}, #{fileState,jdbcType=VARCHAR},
+                #{fileCreateTime,jdbcType=VARCHAR}, #{fileBrief,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.unicom.patrolDoor.entity.FileInfo">
+        insert into file_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                file_id,
+            </if>
+            <if test="fileName != null">
+                file_name,
+            </if>
+            <if test="fileSize != null">
+                file_size,
+            </if>
+            <if test="fileExt != null">
+                file_ext,
+            </if>
+            <if test="fileUserId != null">
+                file_user_id,
+            </if>
+
+            <if test="filePath != null">
+                file_path,
+            </if>
+            <if test="fileState != null">
+                file_state,
+            </if>
+
+            <if test="fileCreateTime != null">
+                file_create_time,
+            </if>
+            <if test="fileBrief != null">
+                file_brief,
+            </if>
+            <if test="isNoKnowledge != null">
+                is_no_knowledge,
+            </if>
+            <if test="knowledgeId != null">
+                knowledge_id,
+            </if>
+            <if test="knowledgeIds != null">
+                knowledge_ids,
+            </if>
+            <if test="fileStatu != null">
+                file_statu,
+            </if>
+            <if test="fileKeyWord != null">
+                file_key_word,
+            </if>
+            <if test="fileDescribe != null">
+                file_describe,
+            </if>
+            <if test="pdfUrl != null">
+                pdf_url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                #{fileId,jdbcType=BIGINT},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=INTEGER},
+            </if>
+            <if test="fileExt != null">
+                #{fileExt,jdbcType=VARCHAR},
+            </if>
+            <if test="fileUserId != null">
+                #{fileUserId,jdbcType=INTEGER},
+            </if>
+
+            <if test="filePath != null">
+                #{filePath,jdbcType=VARCHAR},
+            </if>
+            <if test="fileState != null">
+                #{fileState,jdbcType=VARCHAR},
+            </if>
+
+            <if test="fileCreateTime != null">
+                #{fileCreateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="fileBrief != null">
+                #{fileBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="isNoKnowledge != null">
+                #{isNoKnowledge,jdbcType=VARCHAR},
+            </if>
+            <if test="knowledgeId != null">
+                #{knowledgeId,jdbcType=VARCHAR},
+            </if>
+            <if test="knowledgeIds != null">
+                #{knowledgeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="fileStatu != null">
+                #{fileStatu,jdbcType=INTEGER},
+            </if>
+            <if test="fileKeyWord != null">
+                #{fileKeyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="fileDescribe != null">
+                #{fileDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="pdfUrl != null">
+                #{pdfUrl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateIsNoKnowledgeByKnowledgeType">
+        update file_info
+        set is_no_knowledge = #{isNoKnowledge,jdbcType=INTEGER}
+        where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectAll" resultType="java.util.Map">
+        SELECT
+            f.file_id             AS fileId,
+            f.file_name           AS fileName,
+            f.file_size           AS fileSize,
+            f.file_ext            AS fileExt,
+            f.file_user_id        AS fileUserId,
+            f.file_path           AS filePath,
+            f.file_state          AS fileState,
+            f.file_create_time    AS fileCreateTime,
+            f.knowledge_id        AS knowledgeId,
+            f.knowledge_ids       AS knowledgeIds,
+            f.file_key_word       AS fileKeyWord,
+            f.file_describe       AS fileDescribe,
+            f.useful_num          AS usefulNum,
+            f.un_useful_num       AS unUsefulNum,
+            f.pdf_url             AS pdfUrl,
+            k.knowledge_name      AS knowledgeName,
+            k.knowledge_describe  AS knowledgeDescribe
+        FROM
+        file_info f
+        LEFT JOIN knowledge k ON f.knowledge_id = k.id
+        WHERE f.file_statu=1 and f.file_state=1
+        <if test="isNoKnowledge != null and isNoKnowledge != ''">
+            and f.is_no_knowledge= #{isNoKnowledge}
+        </if>
+        <if test="fileState != null and fileState != ''">
+            and f.file_state= #{fileState}
+        </if>
+        <!--<if test="knowledgeIds != null and knowledgeIds != ''">-->
+        <!--and f.knowledge_ids like CONCAT('%',#{knowledgeIds}, '%')-->
+        <!--</if>-->
+        <if test="list != null and list.size()&gt; 0">
+            <foreach collection="list" item="item">
+                and find_in_set(#{item},f.knowledge_ids)
+            </foreach>
+        </if>
+        <if test="fileName != null and fileName != ''">
+            and f.file_name like CONCAT('%',#{fileName}, '%')
+        </if>
+        <if test="fileUserId != null and fileUserId != ''">
+            and f.file_user_id= #{fileUserId}
+        </if>
+        <if test="fileBrief != null and fileBrief != ''">
+            and f.file_brief= #{fileBrief}
+        </if>
+
+        <if test="fileKeyWord != null and fileKeyWord != ''">
+            and f.file_key_word like CONCAT('%',#{fileKeyWord}, '%')
+        </if>
+        <if test="fileDescribe != null and fileDescribe != ''">
+            and f.file_describe like CONCAT('%',#{fileDescribe}, '%')
+        </if>
+        order by f.file_id desc
+    </select>
+
+    <select id="selectAll2" resultType="java.util.Map">
+        SELECT
+            f.file_id             AS fileId,
+            f.file_name           AS fileName,
+            f.file_size           AS fileSize,
+            f.file_ext            AS fileExt,
+            f.file_user_id        AS fileUserId,
+            f.file_path           AS filePath,
+            f.file_state          AS fileState,
+            f.file_create_time    AS fileCreateTime,
+            f.knowledge_id        AS knowledgeId,
+            f.knowledge_ids       AS knowledgeIds,
+            f.file_key_word       AS fileKeyWord,
+            f.file_describe       AS fileDescribe,
+            f.pdf_url             AS pdfUrl
+        FROM
+        file_info f
+        WHERE f.file_state = '1'
+        and f.is_no_knowledge=0
+        -- and f.file_statu=1
+        <if test="fileName != null and fileName != ''">
+            and f.file_name like CONCAT('%',#{fileName}, '%')
+        </if>
+        <if test="fileUserId != null and fileUserId != ''">
+            and f.file_user_id= #{fileUserId}
+        </if>
+        <if test="fileBrief != null and fileBrief != ''">
+            and f.file_brief= #{fileBrief}
+        </if>
+        <if test="fileKeyWord != null and fileKeyWord != ''">
+            and f.file_key_word like CONCAT('%',#{fileKeyWord}, '%')
+        </if>
+        <if test="fileDescribe != null and fileDescribe != ''">
+            and f.file_describe like CONCAT('%',#{fileDescribe}, '%')
+        </if>
+        order by f.file_id desc
+    </select>
+
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select
+            file_id,
+            file_name,
+            file_size,
+            file_ext,
+            file_user_id,
+            file_path,
+            file_state,
+            file_create_time,
+            file_brief,
+            is_no_knowledge,
+            knowledge_id,
+            knowledge_ids,
+            file_key_word,
+            file_describe,
+            useful_num,
+            un_useful_num,
+            pdf_url
+        from
+            file_info
+        where file_id = #{fileId}
+    </select>
+
+
+    <update id="updateFile" parameterType="com.unicom.patrolDoor.entity.FileInfo">
+        update file_info
+        <set>
+            <if test="fileName != null">
+                file_name = #{fileName},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize},
+            </if>
+            <if test="fileExt != null">
+                file_ext = #{fileExt},
+            </if>
+            <if test="fileUserId != null">
+                file_user_id = #{fileUserId},
+            </if>
+
+            <if test="filePath != null">
+                file_path = #{filePath},
+            </if>
+            <if test="fileState != null">
+                file_state = #{fileState},
+            </if>
+
+            <if test="fileCreateTime != null">
+                file_create_time = #{fileCreateTime},
+            </if>
+            <if test="fileBrief != null">
+                file_brief = #{fileBrief},
+            </if>
+            <if test="knowledgeId != null">
+                knowledge_id = #{knowledgeId},
+            </if>
+            <if test="isNoKnowledge != null">
+                is_no_knowledge = #{isNoKnowledge},
+            </if>
+            <if test="knowledgeIds != null">
+                knowledge_ids = #{knowledgeIds},
+            </if>
+            <if test="fileStatu != null">
+                file_statu = #{fileStatu},
+            </if>
+            <if test="fileKeyWord != null">
+                file_key_word=#{fileKeyWord},
+            </if>
+            <if test="fileDescribe != null">
+                file_describe=#{fileDescribe},
+            </if>
+            <if test="pdfUrl != null">
+                pdf_url=#{pdfUrl},
+            </if>
+        </set>
+        where file_id = #{fileId}
+    </update>
+
+
+    <!--<update id="updateFileInfoByFilePath">-->
+    <!--update file_info-->
+    <!--set-->
+    <!--file_download         =2,-->
+    <!--file_download_num =file_download_num + 1-->
+    <!--where file_path = #{url}-->
+    <!--</update>-->
+
+
+    <select id="selectByFilePath" resultMap="BaseResultMap">
+        select
+            file_id,
+            file_name,
+            file_size,
+            file_ext,
+            file_user_id,
+            file_path,
+            file_state,
+            file_create_time,
+            file_brief,
+            is_no_knowledge,
+            knowledge_id,
+            knowledge_ids,
+            file_key_word,
+            file_describe
+        from
+            file_info
+        where file_path = #{filePath}
+    </select>
+
+
+    <update id="updateFileInfoUsefulNum" parameterType="java.lang.Integer">
+        update file_info
+        set useful_num =useful_num + 1
+        where file_id = #{fileId,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateFileInfoUnUsefulNum" parameterType="java.lang.Integer">
+        update file_info
+        set un_useful_num =un_useful_num + 1
+        where file_id = #{fileId,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="selectByKnowledgeIds" resultMap="BaseResultMap">
+        select
+            file_id,
+            file_name,
+            file_size,
+            file_ext,
+            file_user_id,
+            file_path,
+            file_state,
+            file_create_time,
+            file_brief,
+            is_no_knowledge,
+            knowledge_ids,
+            file_key_word,
+            file_describe
+        from
+            file_info
+        WHERE
+            file_state = 1
+          and file_statu = 1
+          and find_in_set(#{knowledgeId}, knowledge_ids)
+        ORDER BY file_id DESC
+                 LIMIT 0,3
+
+    </select>
+
+
+    <update id="updateIsNoKnowledgeByKnowledgeIds">
+        update file_info
+        set knowledge_ids = #{knowledgeIds}
+        where file_id = #{fileId}
+    </update>
+
+    <update id="updateIsNoKnowledgeByFileId">
+        update file_info
+        set knowledge_ids  ='',
+            is_no_knowledge=0
+        where file_id = #{fileId}
+    </update>
+
+
+    <select id="selectByFileStatu" resultType="com.unicom.patrolDoor.entity.FileInfo">
+        SELECT
+            f.file_id             AS fileId,
+            f.file_name           AS fileName,
+            f.file_size           AS fileSize,
+            f.file_ext            AS fileExt,
+            f.file_user_id        AS fileUserId,
+            f.file_path           AS filePath,
+            f.file_state          AS fileState,
+            f.file_create_time    AS fileCreateTime,
+            f.knowledge_id        AS knowledgeId,
+            f.knowledge_ids       AS knowledgeIds,
+            f.file_key_word       AS fileKeyWord,
+            f.file_describe       AS fileDescribe,
+            f.pdf_url             AS pdfUrl,
+            k.knowledge_name      AS knowledgeName,
+            k.knowledge_describe  AS knowledgeDescribe
+        FROM
+        file_info f
+        LEFT JOIN knowledge k ON f.knowledge_id = k.id
+        WHERE f.file_state = 1 and f.is_no_knowledge = 1
+        <if test="fileName != null and fileName != ''">
+            and f.file_name like CONCAT('%',#{fileName}, '%')
+        </if>
+        <if test="fileStatu != null">
+            and f.file_statu = #{fileStatu}
+        </if>
+        <if test="fileUserId != null">
+            and f.file_user_id = #{fileUserId}
+        </if>
+        <if test="fileKeyWord != null and fileKeyWord != ''">
+            and f.file_key_word like CONCAT('%',#{fileKeyWord}, '%')
+        </if>
+        <if test="fileDescribe != null and fileDescribe != ''">
+            and f.file_describe like CONCAT('%',#{fileDescribe}, '%')
+        </if>
+    </select>
+
+
+    <select id="selectListByUserId" resultType="com.unicom.patrolDoor.entity.FileInfo">
+        SELECT
+            f.file_id             AS fileId,
+            f.file_name           AS fileName,
+            f.file_size           AS fileSize,
+            f.file_ext            AS fileExt,
+            f.file_user_id        AS fileUserId,
+            f.file_path           AS filePath,
+            f.file_state          AS fileState,
+            f.file_statu          AS fileStatu,
+            f.file_create_time    AS fileCreateTime,
+            f.knowledge_id        AS knowledgeId,
+            f.knowledge_ids       AS knowledgeIds,
+            f.file_key_word       AS fileKeyWord,
+            f.file_describe       AS fileDescribe,
+            f.pdf_url             AS pdfUrl,
+            k.knowledge_name      AS knowledgeName,
+            k.knowledge_describe  AS knowledgeDescribe
+        FROM
+        file_info f
+        LEFT JOIN knowledge k ON f.knowledge_id = k.id
+        WHERE f.file_state = 1 and f.is_no_knowledge = 1
+        <if test="fileName != null and fileName != ''">
+            and f.file_name like CONCAT('%',#{fileName}, '%')
+        </if>
+        <if test="fileUserId != null">
+            and f.file_user_id = #{fileUserId}
+        </if>
+        <if test="fileKeyWord != null and fileKeyWord != ''">
+            and f.file_key_word like CONCAT('%',#{fileKeyWord}, '%')
+        </if>
+        <if test="fileDescribe != null and fileDescribe != ''">
+            and f.file_describe like CONCAT('%',#{fileDescribe}, '%')
+        </if>
+    </select>
+
+
+    <delete id="deleteByFilePath">
+        delete
+        from file_info
+        where file_path = #{filePath}
+    </delete>
+
+
+    <select id="selectAllDownload" resultType="java.util.Map">
+        SELECT
+        f.file_id AS fileId,
+        f.file_name AS fileName,
+        f.file_size AS fileSize,
+        f.file_ext AS fileExt,
+        f.file_user_id AS fileUserId,
+        f.file_path AS filePath,
+        f.file_state AS fileState,
+        f.knowledge_id AS knowledgeId,
+        f.knowledge_ids AS knowledgeIds,
+        f.file_key_word AS fileKeyWord,
+        f.file_describe AS fileDescribe,
+        f.useful_num AS usefulNum,
+        f.un_useful_num AS unUsefulNum,
+        f.pdf_url AS pdfUrl,
+        k.knowledge_name AS knowledgeName,
+        k.knowledge_describe AS knowledgeDescribe,
+        flog.create_time as fileCreateTime
+        FROM
+        file_info f
+        LEFT JOIN knowledge k ON f.knowledge_id = k.id
+        LEFT JOIN file_info_log flog ON f.file_id=flog.file_id
+        WHERE f.file_statu=1 and f.file_state=1 and flog.statu=2
+        <if test="fileState != null and fileState != ''">
+            and f.file_state=#{fileState}
+        </if>
+        <if test="fileName != null and fileName != ''">
+            and f.file_name like CONCAT('%',#{fileName}, '%')
+        </if>
+        <if test="fileUserId != null and fileUserId != ''">
+            and flog.user_id=#{fileUserId}
+        </if>
+        ORDER BY flog.create_time desc
+    </select>
+
+
+    <select id="selectHotNewUpload" resultType="java.util.Map">
+        SELECT
+            f.file_id            AS fileId,
+            f.file_name          AS fileName,
+            f.file_size          AS fileSize,
+            f.file_ext           AS fileExt,
+            f.file_user_id       AS fileUserId,
+            f.file_path          AS filePath,
+            f.file_state         AS fileState,
+            f.knowledge_id       AS knowledgeId,
+            f.knowledge_ids      AS knowledgeIds,
+            f.file_key_word      AS fileKeyWord,
+            f.file_describe      AS fileDescribe,
+            f.useful_num         AS usefulNum,
+            f.un_useful_num      AS unUsefulNum,
+            f.pdf_url            AS pdfUrl,
+            k.knowledge_name     AS knowledgeName,
+            k.knowledge_describe AS knowledgeDescribe
+        FROM
+            file_info f
+                LEFT JOIN
+                knowledge k ON f.knowledge_id = k.id
+        WHERE f.file_state = 1
+          and f.file_brief = '1'
+        ORDER BY f.file_create_time desc
+                 LIMIT 0,3
+    </select>
+
+
+    <select id="selectHotDownload" resultType="java.util.Map">
+        select count(a.fileId),
+               a.fileId as fileId,
+               a.fileName as fileName,
+               a.fileSize as fileSize,
+               a.fileExt as fileExt,
+               a.fileUserId as fileUserId,
+               a.filePath as filePath,
+               a.fileState as fileState,
+               a.knowledgeId as knowledgeId,
+               a.knowledgeIds as knowledgeIds,
+               a.fileKeyWord as fileKeyWord,
+               a.fileDescribe as fileDescribe,
+               a.fileCreateTime as fileCreateTime,
+               a.usefulNum as usefulNum,
+               a.pdfUrl as pdfUrl,
+               a.unUsefulNum as unUsefulNum,
+               a.knowledgeName as knowledgeName,
+               a.knowledgeDescribe as knowledgeDescribe
+        from (SELECT
+                  f.file_id            AS fileId,
+                  f.file_name          AS fileName,
+                  f.file_size          AS fileSize,
+                  f.file_ext           AS fileExt,
+                  f.file_user_id       AS fileUserId,
+                  f.file_path          AS filePath,
+                  f.file_state         AS fileState,
+                  f.knowledge_id       AS knowledgeId,
+                  f.knowledge_ids      AS knowledgeIds,
+                  f.file_key_word      AS fileKeyWord,
+                  f.file_describe      AS fileDescribe,
+                  f.file_create_time   AS fileCreateTime,
+                  f.useful_num         AS usefulNum,
+                  f.pdf_url            AS pdfUrl,
+                  f.un_useful_num      AS unUsefulNum,
+                  k.knowledge_name     AS knowledgeName,
+                  k.knowledge_describe AS knowledgeDescribe
+              FROM
+                  file_info f
+                      LEFT JOIN knowledge k ON f.knowledge_id = k.id
+                      LEFT JOIN file_info_log flog ON f.file_id = flog.file_id
+              WHERE f.file_state = 1
+                and flog.statu = 2 ) a
+        GROUP BY a.fileId
+        ORDER BY COUNT(a.fileId) DESC LIMIT 0,3
+
+    </select>
+
+    <select id="selectByKnowledgeIds2" resultMap="BaseResultMap">
+        select
+            file_id,
+            file_name,
+            file_size,
+            file_ext,
+            file_user_id,
+            file_path,
+            file_state,
+            file_create_time,
+            file_brief,
+            is_no_knowledge,
+            knowledge_ids,
+            file_key_word,
+            file_describe
+        from
+            file_info
+        WHERE
+            file_state = 1
+          and find_in_set(#{knowledgeId}, knowledge_ids)
+        ORDER BY file_id DESC
+
+    </select>
+</mapper>

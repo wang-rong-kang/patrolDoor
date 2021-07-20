@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unicom.patrolDoor.dao.KnowledgeMapper" >
+  <resultMap id="BaseResultMap" type="com.unicom.patrolDoor.entity.Knowledge" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="knowledge_name" property="knowledgeName" jdbcType="VARCHAR" />
+    <result column="knowledge_create_time" property="knowledgeCreateTime" jdbcType="VARCHAR" />
+    <result column="knowledge_describe" property="knowledgeDescribe" jdbcType="VARCHAR" />
+    <result column="knowledge_statu" property="knowledgeStatu" jdbcType="INTEGER" />
+    <result column="knowledge_update_time" property="knowledgeUpdateTime" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, knowledge_name, knowledge_create_time, knowledge_describe, knowledge_statu,knowledge_update_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from knowledge
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from knowledge
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.unicom.patrolDoor.entity.Knowledge" >
+    insert into knowledge (id, knowledge_name, knowledge_create_time,
+      knowledge_describe, knowledge_statu,knowledge_update_time)
+    values (#{id,jdbcType=INTEGER}, #{knowledgeName,jdbcType=VARCHAR}, #{knowledgeCreateTime,jdbcType=VARCHAR},
+      #{knowledgeDescribe,jdbcType=VARCHAR}, #{knowledgeStatu,jdbcType=INTEGER}, #{knowledgeUpdateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unicom.patrolDoor.entity.Knowledge" >
+    insert into knowledge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="knowledgeName != null" >
+        knowledge_name,
+      </if>
+      <if test="knowledgeCreateTime != null" >
+        knowledge_create_time,
+      </if>
+      <if test="knowledgeDescribe != null" >
+        knowledge_describe,
+      </if>
+      <if test="knowledgeStatu != null" >
+        knowledge_statu,
+      </if>
+      <if test="knowledgeUpdateTime != null" >
+        knowledge_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeName != null" >
+        #{knowledgeName,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeCreateTime != null" >
+        #{knowledgeCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeDescribe != null" >
+        #{knowledgeDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeStatu != null" >
+        #{knowledgeStatu,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeUpdateTime != null" >
+        #{knowledgeUpdateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.unicom.patrolDoor.entity.Knowledge" >
+    update knowledge
+    <set >
+      <if test="knowledgeName != null" >
+        knowledge_name = #{knowledgeName,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeCreateTime != null" >
+        knowledge_create_time = #{knowledgeCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeDescribe != null" >
+        knowledge_describe = #{knowledgeDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeStatu != null" >
+        knowledge_statu = #{knowledgeStatu,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeUpdateTime != null" >
+        knowledge_update_time = #{knowledgeUpdateTime,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unicom.patrolDoor.entity.Knowledge" >
+    update knowledge
+    set knowledge_name = #{knowledgeName,jdbcType=VARCHAR},
+      knowledge_create_time = #{knowledgeCreateTime,jdbcType=VARCHAR},
+      knowledge_describe = #{knowledgeDescribe,jdbcType=VARCHAR},
+      knowledge_statu = #{knowledgeStatu,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from knowledge
+    where 1=1
+    <if test="knowledgeName != null and knowledgeName != ''">
+      and knowledge_name like CONCAT('%',#{knowledgeName}, '%')
+    </if>
+    <if test="knowledgeStatu != null and knowledgeStatu != ''">
+      and knowledge_statu like CONCAT('%',#{knowledgeStatu}, '%')
+    </if>
+    order by id desc
+  </select>
+
+  <select id="selectAllByKnowledgeStatu" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from knowledge
+    where knowledge_statu = #{knowledgeStatu,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from knowledge
+    where 1=1
+       and knowledge_name = #{knowledgeName}
+      <if test="id != null">
+        and id !=#{id}
+      </if>
+  </select>
+
+
+  <select id="selectAllKnowledge" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from knowledge
+    where knowledge_statu=1
+    order by id desc
+  </select>
+
+  <select id="selectAllDelete" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from knowledge
+    where 1=1 and knowledge_statu=2
+    <if test="knowledgeName != null and knowledgeName != ''">
+      and knowledge_name like CONCAT('%',#{knowledgeName}, '%')
+    </if>
+    order by id desc
+  </select>
+
+
+
+
+
+
+
+
+
+  <select id="selectByNameAndIds" resultMap="BaseResultMap">
+    select
+    id, knowledge_name, knowledge_create_time, knowledge_describe, knowledge_statu,knowledge_update_time
+    from knowledge
+    where 1=1
+    <if test="list != null and list.size()&gt; 0">
+        and id in
+      <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+      </foreach>
+    </if>
+    <if test="statu != null and statu != ''">
+      and knowledge_statu=#{statu}
+    </if>
+    <if test="name != null and name != ''">
+      and knowledge_name like CONCAT('%',#{name},'%')
+    </if>
+    order by id desc
+  </select>
+</mapper>

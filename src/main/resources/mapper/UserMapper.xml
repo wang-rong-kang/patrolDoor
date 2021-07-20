@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unicom.patrolDoor.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.unicom.patrolDoor.entity.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="VARCHAR"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="VARCHAR"/>
+        <result column="on_line" property="onLine" jdbcType="INTEGER"/>
+        <result column="is_no" property="isNo" jdbcType="INTEGER"/>
+        <result column="number" property="number" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="statu" property="statu" jdbcType="INTEGER"/>
+        <result column="head_file" property="headFile" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="tag_ids" property="tagIds" jdbcType="VARCHAR"/>
+        <result column="is_local" property="isLocal" jdbcType="INTEGER"/>
+        <result column="token" property="token" jdbcType="VARCHAR"/>
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id,
+        name,
+        gmt_create,
+        gmt_modified,
+        on_line,
+        is_no,
+        number,
+        password,
+        statu,
+        head_file,
+        email,
+        tag_ids,
+        is_local,
+        token,
+        province_code
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.unicom.patrolDoor.entity.User">
+        insert into user (id, name,
+                          gmt_create, gmt_modified)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+                #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.unicom.patrolDoor.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+
+            <if test="name != null">
+                name,
+            </if>
+
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+
+            <if test="number != null">
+                number,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="isNo != null">
+                is_no,
+            </if>
+            <if test="headFile != null">
+                head_file,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="tagIds != null">
+                tag_ids,
+            </if>
+            <if test="isLocal != null">
+                is_local,
+            </if>
+            <if test="token != null">
+                token,
+            </if>
+            <if test="provinceCode != null">
+                province_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=BIGINT},
+            </if>
+
+            <if test="number != null">
+                #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="isNo != null">
+                #{isNo,jdbcType=INTEGER},
+            </if>
+            <if test="headFile != null">
+                #{headFile,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="tagIds != null">
+                #{tagIds,jdbcType=VARCHAR},
+            </if>
+            <if test="isLocal != null">
+                #{isLocal,jdbcType=INTEGER},
+            </if>
+            <if test="token != null">
+                #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null">
+                #{provinceCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.unicom.patrolDoor.entity.User">
+        update user
+        <set>
+
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=BIGINT},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=BIGINT},
+            </if>
+
+            <if test="isNo != null">
+                is_no = #{isNo,jdbcType=INTEGER},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="statu != null">
+                statu = #{statu,jdbcType=INTEGER},
+            </if>
+            <if test="onLine != null">
+                on_line = #{onLine,jdbcType=INTEGER},
+            </if>
+            <if test="headFile != null">
+                head_file = #{headFile,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="tagIds != null">
+                tag_ids = #{tagIds,jdbcType=VARCHAR},
+            </if>
+            <if test="isLocal != null">
+                is_local=#{isLocal,jdbcType=INTEGER},
+            </if>
+            <if test="token != null">
+                token=#{token,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null">
+                province_code=#{provinceCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.unicom.patrolDoor.entity.User">
+        update user
+        set
+            name         = #{name,jdbcType=VARCHAR},
+            gmt_create   = #{gmtCreate,jdbcType=BIGINT},
+            gmt_modified = #{gmtModified,jdbcType=BIGINT},
+            is_no        = #{isNo,jdbcType=INTEGER},
+            number       = #{number,jdbcType=VARCHAR},
+            password     = #{password,jdbcType=VARCHAR},
+            email     = #{email,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="selectUserByNumberAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+            id,
+            name,
+            gmt_create,
+            gmt_modified,
+            on_line,
+            is_no,
+            statu,
+            head_file,
+            is_local,
+            email
+        from user
+        where number = #{userName}
+              and password = #{password}
+              and statu = 1
+    </select>
+
+    <update id="updateIsOnLineByUserId" parameterType="java.lang.Integer">
+        update user
+        set on_line =1
+        where id = #{id}
+    </update>
+
+    <update id="updateIsOnLineById" parameterType="java.lang.Integer">
+        update user
+        set on_line =0
+        where id = #{id}
+    </update>
+
+    <select id="selectByNumber" resultMap="BaseResultMap">
+        select
+            u.id,
+            u.name,
+            u.gmt_create,
+            u.gmt_modified,
+            u.on_line,
+            u.is_no,
+            u.head_file,
+            u.email,
+            u.statu,
+            u.is_local
+        from user u
+        where u.number = #{number}
+    </select>
+
+
+    <select id="selectByStatu" resultMap="BaseResultMap">
+        SELECT
+            u.id,
+            u.name,
+            u.gmt_create,
+            u.gmt_modified,
+            u.on_line,
+            u.number,
+            u.is_no,
+            u.email,
+            u.is_local,
+            l.lastLoginTime AS lastLoginTime
+        FROM
+          user u LEFT JOIN ( SELECT MAX(create_time) AS lastLoginTime,user_id
+                             FROM
+                             user_log
+                             GROUP BY user_id ) l ON u.id = l.user_id
+        WHERE 1 = 1
+        <if test="statu != null">
+            and u.statu = #{statu}
+        </if>
+        <if test="name != null">
+            and u.`name` like CONCAT('%',#{name}, '%')
+        </if>
+        <if test="number != null">
+            and u.number LIKE CONCAT('%',#{number} ,'%')
+        </if>
+        order by u.id desc
+    </select>
+
+    <select id="selectUserByNumberAndEmail" resultMap="BaseResultMap">
+        select
+            u.id,
+            u.name,
+            u.gmt_create,
+            u.gmt_modified,
+            u.on_line,
+            u.is_no,
+            u.head_file,
+            u.is_local,
+            u.email
+        from user u
+        where u.number = #{number} and u.email= #{email}
+    </select>
+
+
+    <select id="selectTags" resultMap="BaseResultMap">
+        select
+            id,
+            name,
+            gmt_create,
+            gmt_modified,
+            on_line,
+            is_no,
+            number,
+            password,
+            statu,
+            head_file,
+            email,
+            tag_ids,
+            is_local,
+            token,
+            is_local,
+            province_code
+        from user u
+        where find_in_set(#{tags}, tag_ids) and is_no=3
+    </select>
+
+
+    <update id="updateTagsOnUserId">
+        update user
+        set tag_ids =#{tags}
+        where id = #{id} and is_no=3
+    </update>
+
+    <update id="updateTagsByUserId">
+        update user
+        set tag_ids =''
+        where id = #{id} and is_no=3
+    </update>
+
+
+    <select id="selectTagss" resultMap="BaseResultMap">
+        select
+            id,
+            name,
+            gmt_create,
+            gmt_modified,
+            on_line,
+            is_no,
+            number,
+            password,
+            statu,
+            head_file,
+            email,
+            tag_ids,
+            is_local,
+            token,
+            province_code
+        from user u
+        where find_in_set(#{tags}, tag_ids) and is_no=2
+    </select>
+
+    <update id="updateTagsById">
+        update user
+        set tag_ids =#{tags}
+        where id = #{id} and is_no=2
+    </update>
+
+    <update id="updateTagsOnId">
+        update user
+        set tag_ids =''
+        where id = #{id} and is_no=2
+    </update>
+
+
+
+
+    <select id="selectUserByStatu" resultMap="BaseResultMap">
+        select
+            id,
+            name,
+            gmt_create,
+            gmt_modified,
+            on_line,
+            is_no,
+            number,
+            password,
+            statu,
+            head_file,
+            email,
+            is_local,
+            tag_ids
+        from user u
+        where statu=1
+    </select>
+
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        select max(id) from user
+    </select>
+
+
+    <select id="selectByStatuAndIsLocal" resultMap="BaseResultMap">
+        select
+            id,
+            name,
+            gmt_create,
+            gmt_modified,
+            on_line,
+            is_no,
+            number,
+            password,
+            statu,
+            head_file,
+            email,
+            tag_ids,
+            is_local,
+            token
+        from user u
+        where statu=1 and is_local=0 and on_line=1
+    </select>
+</mapper>
+

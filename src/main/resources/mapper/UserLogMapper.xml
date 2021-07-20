@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unicom.patrolDoor.dao.UserLogMapper">
+    <resultMap id="BaseResultMap" type="com.unicom.patrolDoor.entity.UserLog">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="is_no" property="isNo" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="out_time" property="outTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        user_id,
+        is_no,
+        create_time,
+        out_time
+    </sql>
+
+
+    <insert id="insertSelective" parameterType="com.unicom.patrolDoor.entity.User">
+        insert into user_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+
+            <if test="userId != null">
+                user_id,
+            </if>
+
+            <if test="isNo != null">
+                is_no,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+
+            <if test="outTime != null">
+                out_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+
+            <if test="isNo != null">
+                #{isNo,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="outTime != null">
+                #{outTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.unicom.patrolDoor.entity.User">
+        update user_log
+        <set>
+
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+
+            <if test="isNo != null">
+                is_no = #{isNo,jdbcType=BIGINT},
+            </if>
+
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="outTime != null">
+                out_time = #{outTime,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        select max(id) from user_log
+    </select>
+
+    <select id="selectTodayUserOnLineNum" resultType="java.lang.Integer">
+        select
+                count(distinct user_id)
+        from user_log
+        where create_time &gt;= #{begin} and out_time &lt;= #{end}
+    </select>
+
+
+    <select id="selectByBeginTimeAndIsOnLineAndEndTime" resultMap="BaseResultMap">
+        select
+            id,
+            user_id,
+            is_no,
+            create_time,
+            out_time
+        from user_log
+        where is_no=1
+          and create_time like CONCAT('%',#{yesterdayTime}, '%')
+          and out_time like CONCAT('%',#{yesterdayTime}, '%')
+    </select>
+</mapper>
+

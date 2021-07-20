@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unicom.patrolDoor.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.unicom.patrolDoor.entity.Comment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="commentator" property="commentator" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="VARCHAR" />
+    <result column="like_count" property="likeCount" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="comment_id" property="commentId" jdbcType="INTEGER" />
+    <result column="statu" property="statu" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, parent_id, type, commentator, gmt_create, like_count, content,
+    comment_count
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="com.unicom.patrolDoor.entity.Comment" >
+    insert into comment (id, parent_id, type, 
+      commentator, gmt_create,
+      like_count, content, comment_count
+      )
+    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{commentator,jdbcType=BIGINT}, #{gmtCreate,jdbcType=VARCHAR},
+      #{likeCount,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{commentCount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unicom.patrolDoor.entity.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="commentator != null" >
+        commentator,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="likeCount != null" >
+        like_count,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="statu != null" >
+        statu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="commentator != null" >
+        #{commentator,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=VARCHAR},
+      </if>
+
+      <if test="likeCount != null" >
+        #{likeCount,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="statu != null" >
+        #{statu,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.unicom.patrolDoor.entity.Comment" >
+    update comment
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId},
+      </if>
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="commentator != null" >
+        commentator = #{commentator},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate},
+      </if>
+
+      <if test="likeCount != null" >
+        like_count = #{likeCount},
+      </if>
+      <if test="content != null" >
+        content = #{content},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount},
+      </if>
+      <if test="statu != null" >
+        statu = #{commentCount},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select  com.id, com.parent_id, com.type, com.commentator, com.gmt_create, com.like_count, com.content,
+            com.comment_count,u.name as userName
+    from comment com
+    left join user u on com.commentator=u.id
+    where com.parent_id = #{id} and com.statu =0 and com.type = #{type}
+    order by com.gmt_create desc
+  </select>
+
+  <update id="updateCommentCount" parameterType="java.lang.Integer" >
+    update comment
+    set comment_count =comment_count+1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <update id="updateByParentIdAndStatu" parameterType="java.lang.Integer" >
+    update comment
+    set statu = #{statu}
+    where parent_id = #{questionId}
+  </update>
+
+
+  <select id="selectMaxId" resultType="java.lang.Integer">
+    select max(id) from comment order by id desc
+  </select>
+
+
+  <select id="replyNum" resultType="java.lang.Integer">
+    SELECT
+      count(id)
+    FROM
+      COMMENT
+    WHERE
+      type = #{type}
+      AND gmt_create between #{begin} and #{end}
+  </select>
+
+</mapper>

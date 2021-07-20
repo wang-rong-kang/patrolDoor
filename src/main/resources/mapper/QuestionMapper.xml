@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unicom.patrolDoor.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.unicom.patrolDoor.entity.Question" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="VARCHAR" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="like_count" property="likeCount" jdbcType="INTEGER" />
+    <result column="tag" property="tag" jdbcType="INTEGER" />
+    <result column="sticky" property="sticky" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.unicom.patrolDoor.entity.Question" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, gmt_create, gmt_modified, creator, comment_count, view_count, like_count, 
+    tag, sticky,pic
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+      q.id, q.title, q.gmt_create,q.description, q.gmt_modified, q.creator, q.comment_count, q.view_count, q.like_count,
+      q.tag, q.sticky,q.pic,q.url,t.name as tagName
+    from question q
+    left join tag t on q.tag=t.id
+    where q.id = #{q.id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.unicom.patrolDoor.entity.Question" >
+    insert into question (id, title, gmt_create, 
+      gmt_modified, creator, comment_count, 
+      view_count, like_count, tag, 
+      sticky, description)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT}, 
+      #{gmtModified,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, #{commentCount,jdbcType=INTEGER}, 
+      #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, #{tag,jdbcType=INTEGER},
+      #{sticky,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unicom.patrolDoor.entity.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="likeCount != null" >
+        like_count,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="sticky != null" >
+        sticky,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null" >
+        #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="sticky != null" >
+        #{sticky,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.unicom.patrolDoor.entity.Question" >
+    update question
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null" >
+        like_count = #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="sticky != null" >
+        sticky = #{sticky,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.unicom.patrolDoor.entity.Question" >
+    update question
+    set title = #{title,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_modified = #{gmtModified,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=BIGINT},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=INTEGER},
+      sticky = #{sticky,jdbcType=INTEGER},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unicom.patrolDoor.entity.Question" >
+    update question
+    set title = #{title,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=BIGINT},
+      gmt_modified = #{gmtModified,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=BIGINT},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=INTEGER},
+      sticky = #{sticky,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAllQuestion" resultMap="BaseResultMap">
+    select
+           q.id ,
+           q.title,
+           q.gmt_create,
+           q.gmt_modified ,
+           q.creator ,
+           q.comment_count ,
+           q.view_count,
+           q.like_count,
+           q.tag ,
+           q.sticky ,
+           q.description,
+           u.name as userName,
+           u.head_file as headFile,
+           t.name as tagName
+    from question q
+    left join user u on u.id=q.creator
+    left join tag t on t.id=q.tag
+    where u.statu = 1 and q.type=0 and q.tag!=99999
+    <if test="tag != null and tag != ''" >
+      and q.tag = #{tag}
+    </if>
+    <if test="title != null and title != ''" >
+      and q.title like CONCAT('%',#{title}, '%')
+    </if>
+    order  by q.id desc
+  </select>
+  <update id="updateCommentCount" parameterType="java.lang.Integer" >
+    update question
+    set comment_count =comment_count+1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAllQuestionByViewCount" resultMap="BaseResultMap">
+    SELECT
+      a.tagName as tagName,
+      a.title as title,
+      a.userName as userName,
+      a.gmtCreate as createTime,
+      a.id as id,
+      a.headFile as headFile
+    FROM
+      (
+        SELECT
+          q.id AS id,
+          q.title AS title,
+          q.gmt_create AS gmtCreate,
+          q.gmt_modified AS gmtModified,
+          q.creator AS creator,
+          q.comment_count AS commentCount,
+          q.view_count AS viewCount,
+          q.like_count AS likeCount,
+          q.tag AS tag,
+          q.sticky AS sticky,
+          q.description AS description,
+          u.name AS userName,
+          u.head_file AS headFile,
+          t.name AS tagName
+        FROM
+          question q
+          LEFT JOIN user u ON u.id = q.creator
+          LEFT JOIN tag t ON t.id = q.tag
+          WHERE
+            u.statu = 1
+            AND q.type = 0
+            AND q.tag != 99999
+            ORDER BY
+            q.view_count DESC
+            LIMIT 0,10
+        ) a
+        WHERE 1 = 1
+          <if test="tag != null and tag != ''" >
+            and a.tag = #{tag}
+          </if>
+        ORDER BY a.viewCount DESC
+  </select>
+
+
+  <select id="sendQuestionNum" resultType="java.lang.Integer">
+    SELECT
+      count(id)
+    FROM
+      question
+    <where>
+      gmt_create between #{begin} and #{end}
+    </where>
+  </select>
+
+
+  <select id="selectQuestionByHot" resultType="java.util.Map">
+    SELECT
+      q.id,
+      q.title,
+      q.view_count
+    FROM
+      question q
+    WHERE q.type=0
+    ORDER BY
+      q.view_count DESC
+      LIMIT 0,5
+  </select>
+
+
+  <update id="updateViewNumById" parameterType="java.lang.Integer" >
+    update question
+    set view_count =view_count+1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <select id="selectByTagId" resultMap="BaseResultMap">
+    SELECT
+      id, title, gmt_create, gmt_modified, creator, comment_count, view_count, like_count,
+      tag, sticky,pic
+    FROM
+      question
+    WHERE tag=#{tagId} and type=0
+  </select>
+
+  <update id="updateQuestionByTagId">
+    update question
+    set tag =99999,gmt_modified=#{updateTime}
+    where tag = #{tagId}
+  </update>
+
+
+  <select id="selectByNameAndStatu" resultMap="BaseResultMap">
+    SELECT
+           q.id,
+           q.title,
+           q.gmt_create,
+           q.gmt_modified,
+           q.creator,
+           q.comment_count,
+           q.view_count,
+           q.like_count,
+           q.tag,
+           q.sticky,
+           q.pic,
+           u.head_file as headFile
+    FROM
+      question q
+    left join user u on u.id= q.creator
+    WHERE q.tag=99999 and q.type=0
+    <if test="name != null and name != ''" >
+      and q.title like CONCAT('%',#{name},'%')
+    </if>
+    <if test="userId != null and userId != ''" >
+      and q.creator=#{userId}
+    </if>
+
+    order  by q.gmt_modified desc
+  </select>
+
+
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    SELECT
+    q.id, q.title, q.gmt_create, q.gmt_modified, q.creator, q.comment_count, q.view_count, q.like_count,
+    q.tag, q.sticky,q.pic,u.name as userName,u.head_file as headFile
+    FROM
+    question q left join user u on u.id=q.creator
+    WHERE q.tag=99999 and q.type=0
+    <if test="title != null and title != ''" >
+      and q.title like CONCAT('%',#{title},'%')
+    </if>
+    order  by q.gmt_modified desc
+  </select>
+
+
+
+
+
+
+
+  <update id="updateTagByQuestionAndTag">
+    update question
+    set tag =#{tag}
+    where id = #{questionId}
+  </update>
+
+
+
+  <select id="selectLastQuestion" resultMap="BaseResultMap">
+    SELECT
+      q.id,
+      q.title,
+      q.gmt_create,
+      q.gmt_modified,
+      q.creator,
+      q.comment_count,
+      q.view_count,
+      q.like_count,
+      q.tag,
+      q.sticky,
+      q.pic
+    FROM
+      question q
+      ORDER BY q.id DESC
+      limit 0,1
+  </select>
+
+
+  <select id="selectAllQuestionByTagAndTypeAndUserId" resultMap="BaseResultMap">
+    select
+      q.id ,
+      q.title,
+      q.gmt_create,
+      q.gmt_modified ,
+      q.creator ,
+      q.comment_count ,
+      q.view_count,
+      q.like_count,
+      q.tag ,
+      q.type ,
+      q.sticky ,
+      q.description,
+      u.name as userName,
+      u.head_file as headFile,
+      t.name as tagName
+    from question q
+    left join user u on u.id=q.creator
+    left join tag t on t.id=q.tag
+    where u.statu = 1 and q.tag!=99999
+    <if test="tag != null and tag != ''" >
+      and q.tag = #{tag}
+    </if>
+    <if test="type != null" >
+      and q.type = #{type}
+    </if>
+    <if test="userId != null and userId != ''" >
+      and q.creator = #{userId}
+    </if>
+    <if test="title != null and title != ''" >
+      and q.title like CONCAT('%',#{title}, '%')
+    </if>
+    order by q.id desc
+  </select>
+</mapper>

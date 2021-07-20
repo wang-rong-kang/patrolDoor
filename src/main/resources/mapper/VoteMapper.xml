@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unicom.patrolDoor.dao.VoteMapper" >
+  <resultMap id="BaseResultMap" type="com.unicom.patrolDoor.entity.Vote" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="theme" property="theme" jdbcType="VARCHAR" />
+    <result column="opt" property="opt" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="vote_status" property="voteStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="subscript" property="subscript" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, theme, opt, user_id, begin_time, end_time,subscript,vote_status,create_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from vote
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vote
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.unicom.patrolDoor.entity.Vote" >
+    insert into vote (id, theme, opt,
+                      user_id, begin_time, end_time
+    )
+    values (#{id,jdbcType=INTEGER}, #{theme,jdbcType=VARCHAR}, #{opt,jdbcType=VARCHAR},
+            #{userId,jdbcType=INTEGER}, #{beginTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unicom.patrolDoor.entity.Vote" >
+    insert into vote
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="theme != null" >
+        theme,
+      </if>
+      <if test="opt != null" >
+        opt,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+
+      <if test="subscript != null" >
+        subscript,
+      </if>
+
+      <if test="voteStatus != null" >
+        vote_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="theme != null" >
+        #{theme,jdbcType=VARCHAR},
+      </if>
+      <if test="opt != null" >
+        #{opt,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subscript != null" >
+        #{subscript,jdbcType=VARCHAR},
+      </if>
+      <if test="voteStatus != null" >
+        #{voteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.unicom.patrolDoor.entity.Vote" >
+    update vote
+    <set >
+      <if test="theme != null" >
+        theme = #{theme,jdbcType=VARCHAR},
+      </if>
+      <if test="opt != null" >
+        opt = #{opt,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="voteStatus != null" >
+        vote_status = #{voteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unicom.patrolDoor.entity.Vote" >
+    update vote
+    set theme = #{theme,jdbcType=VARCHAR},
+        opt = #{opt,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=INTEGER},
+        begin_time = #{beginTime,jdbcType=VARCHAR},
+        end_time = #{endTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectList" resultType="java.util.Map">
+    select
+           v.id as id,
+           v.theme as theme,
+           v.create_time as createTime,
+           v.begin_time as beginTime,
+           v.end_time as endTime,
+           v.vote_status as voteStatus,
+           u.id as userId,
+           u.name as userName
+    from vote v
+    left join user u on u.id=v.user_id
+    where v.vote_status != 1
+      <if test="theme != null and theme !='' " >
+          and v.theme  like CONCAT('%',#{theme}, '%')
+      </if>
+      <if test="beginTime != null and beginTime !='' " >
+          and v.begin_time &gt;=#{beginTime}
+      </if>
+      <if test="endTime != null and endTime !='' " >
+          and v.end_time &lt;=#{endTime}
+      </if>
+      <if test="voteStatus != null and voteStatus !='' " >
+          and v.vote_status =#{voteStatus}
+      </if>
+      <if test="userName != null and userName !='' " >
+          and u.name like CONCAT('%',#{userName}, '%')
+      </if>
+    order by v.create_time desc
+  </select>
+
+  <update id="updateVoteStatusById">
+    update vote set vote_status=#{voteStatus} where id=#{id}
+  </update>
+
+
+  <select id="selectHistoryList" resultType="java.util.Map">
+    select
+        v.id as id,
+        v.theme as theme,
+        v.create_time as createTime,
+        v.begin_time as beginTime,
+        v.end_time as endTime,
+        v.vote_status as voteStatus,
+        u.id as userId,
+        u.name as userName
+    from vote v
+    left join user u on u.id=v.user_id
+    where 1= 1
+          and v.user_id=#{userId}
+      <if test="theme != null and theme !='' " >
+          and v.theme  like CONCAT('%',#{theme}, '%')
+      </if>
+      <if test="beginTime != null and beginTime !='' " >
+          and v.begin_time &gt;=#{beginTime}
+      </if>
+      <if test="voteStatus != null and voteStatus !='' " >
+          and v.vote_status =#{voteStatus}
+      </if>
+      <if test="endTime != null and endTime !='' " >
+          and v.end_time &lt;=#{endTime}
+      </if>
+    order by v.create_time desc
+  </select>
+
+
+  <update id="updateVoteStatuByTime">
+    update vote set vote_status=4 where end_time &lt;=#{nowTime} and vote_status=3
+  </update>
+</mapper>
